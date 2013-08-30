@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load set_var %}
+
+{% block title %}ReadWeibo{% endblock%}
+
+{% block extra_css %}
+<link rel="stylesheet" media="all" charset="utf-8" href="{{STATIC_URL}}css/home.css"/>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:500,400,300" rel="stylesheet" type="text/css">
+{% endblock %}
+		    
+{% block main %}
+  
+   
+<div class="span2" id="left-part">
+    <ul class="nav nav-tabs nav-stacked">
+      <li><a href="/class/from_friends">朋友的微博</a></li>
+      <li><a href="/class/others">其它</a></li>
+    </ul>
+</div>
+
+<div class="span10" id="left-part">
+	<ul class="gNow" id="col1">
+		<li>
+			<div class="card">
+				<p class="card-title">Google Now Card</p>
+				<p>Font is Open Sans. Title is 28px, whereas the body is 14px.</p>
+				<p>Font color is #444, on a #fff card. The page color is #e1e1e1. I got these from samples I took from Google's "Now" page.</p>
+				<p class="url"><a href="http://www.google.com/landing/now/">See the page</a></p>
+			</div>
+		</li>
+		
+		<li>
+			<div class="card">
+				<p class="card-title">The Card is Repeatable</p>
+				<p>We can have as many of these on a page as we like.</p>
+				<p>測試中文</p>
+			</div>
+	  </li>
+	</ul>
+	
+	<ul class="gNow" id="col2">
+		<li>
+		    <div class="card">
+		        <p class="card-title">Picture</p>
+		        <img src="http://www.eriklindemann.com/eMetro/images/full/helpless.jpg" class="full" />
+		        <p>When a card has a picture, it should almost always be full bleed width-wise.</p>
+		        <p>There are a few exceptions to this which will be covered.</p>
+		    </div>
+		</li>
+	</ul>
+
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+	<script type="text/javascript" src="{{STATIC_URL}}js/home.js"></script>
+{% endblock %}
