@@ -1,4 +1,6 @@
 from django import template
+from django.template.defaultfilters import stringfilter
+import re
 
 register = template.Library()
 
@@ -16,3 +18,10 @@ def get_range(value):
 def keyvalue(dict, key):
     ''' return dict keyvalue'''
     return dict[key]
+
+@register.filter
+def parse_html_tag(value):
+    ''' for '<a href="url">text</a>' return ('url', 'text') '''
+    return value
+#     res = re.search('<a.*?href="([^"]*)"[^>]*?>(.*?)</a>', value)
+#     return (res.groups()[0], res.groups[1])
