@@ -11,6 +11,7 @@ from django.db.models import Count
 from django.utils import simplejson
 
 from ReadWeibo.account.models import Account
+from ReadWeibo.mainapp.models import Weibo
 
 from libweibo import weibo
 from main import Config
@@ -26,17 +27,17 @@ _mimetype = u'application/javascript, charset=utf8'
 wclient = weibo.APIClient(app_key=Config.weibo_app_key,
                     app_secret = Config.weibo_app_secret,
                     redirect_uri = Config.callback_url)
-# wclient.set_access_token("2.00l9nr_DfUKrWDf655d3279arZgVvD", "1511349376")
 
 def home(request):
     template_var = {}
     print 'current login user: ', request.user
     if request.user.is_authenticated() and not request.user.is_superuser:
-#         template_var['cur_user'] = User.objects.get(username=request.user.username).account_set.all()[0]
         user = Account.objects.get(w_name=request.user.username)
 
         watch_weibo = user.watchweibo.exclude(bmiddle_pic__startswith='h')[:10]
-        size = len(watch_weibo) / 2; print len(watch_weibo)
+        size = len(watch_weibo) / 2;
+        print len(watch_weibo)
+        print watch_weibo[0].real_category
         template_var['watch_weibo_left'] = watch_weibo[:size]
         template_var['watch_weibo_right'] = watch_weibo[size:]
         template_var['cur_user'] = user
@@ -46,7 +47,19 @@ def home(request):
     return render_to_response("home.html", template_var,
                               context_instance=RequestContext(request))
 
-
+def set_category(request):
+    print request
+    if not request.is_ajax():
+        return HttpResponse('ERROR:NOT AJAX REQUEST')
+    post_data = simplejson.loads(request.raw_post_data)
+    try:
+        wb = Weibo.objects.get(w_id=post_data['w_id'])
+        wb.real_category = post_data['category']
+        wb.save()
+    except:
+        print 'post_data error...'
+        return HttpResponse(simplejson.dumps(False), _mimetype)
+    return HttpResponse(simplejson.dumps(True), _mimetype)
 
 
 

@@ -1,9 +1,10 @@
 <ul class="gNow" id="{{weibo.w_id}}">
     <li>
         <div class="btn-group" data-toggle="buttons-radio">
-          <button class="btn">状态更新</button>
-          <button class="btn">新闻</button>
-          <button class="btn">主题微博</button>
+            <button class="btn {% if weibo.real_category == 0%}active{% endif %}" >未分类</button>
+          <button id="{{weibo.w_id}}-1" class="btn category {% if weibo.real_category == 1 %}active{% endif %}" >状态更新</button>
+          <button id="{{weibo.w_id}}-2" class="btn category {% if weibo.real_category == 2 %}active{% endif %}">新闻</button>
+          <button id="{{weibo.w_id}}-3" class="btn category {% if weibo.real_category == 3 %}active{% endif %}">主题微博</button>
         </div>
         <div class="card">
             <p class="card-title">@{{weibo.owner.w_name}}</p>
