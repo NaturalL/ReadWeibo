@@ -13,12 +13,12 @@ from django.utils import simplejson
 from ReadWeibo.account.models import Account
 from ReadWeibo.mainapp.models import Weibo
 
+from main import Config, WeiboCrawler
 from libweibo import weibo
-from main import Config
-
-
-import datetime
+from time import sleep
 import itertools
+import datetime
+import thread
 import re
 
 _DEBUG = True
@@ -28,27 +28,37 @@ wclient = weibo.APIClient(app_key=Config.weibo_app_key,
                     app_secret = Config.weibo_app_secret,
                     redirect_uri = Config.callback_url)
 
-def home(request):
+def home(request, category_id=0):
     template_var = {}
     print 'current login user: ', request.user
     if request.user.is_authenticated() and not request.user.is_superuser:
         user = Account.objects.get(w_name=request.user.username)
 
-        watch_weibo = user.watchweibo.exclude(bmiddle_pic__startswith='h')[:10]
+        # fetch new weibo
+        if category_id == 0:
+            thread.start_new_thread(WeiboCrawler.CrawleHomeTimeline,(user.w_uid, ))
+        watch_weibo = user.watchweibo.filter(real_category__exact=category_id)[:20]
         size = len(watch_weibo) / 2;
         print len(watch_weibo)
-        print watch_weibo[0].real_category
         template_var['watch_weibo_left'] = watch_weibo[:size]
         template_var['watch_weibo_right'] = watch_weibo[size:]
         template_var['cur_user'] = user
+        template_var['category_id'] = category_id
     else:
         template_var['authorize_url'] = wclient.get_authorize_url()
 
     return render_to_response("home.html", template_var,
                               context_instance=RequestContext(request))
 
+def online_learning(request, category_id=0):
+	
+	
+	pass
+
+
+
+
 def set_category(request):
-    print request
     if not request.is_ajax():
         return HttpResponse('ERROR:NOT AJAX REQUEST')
     post_data = simplejson.loads(request.raw_post_data)

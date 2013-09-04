@@ -1,2 +1,3 @@
 *.pyc
 ReadWeibo/static/*
+data/*

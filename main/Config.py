@@ -14,7 +14,7 @@ Created on Aug 29, 2013
 # weibo_app_secret = u'289ae4ee3da84d8c4c359312dc2ca17d'
 # callback_url = site_url + u'/weibo_callback'
 # callback_rm_url = site_url + u'/weibo_callback_rm'
-site_url = u'http://127.0.0.1:8000'
+site_url = u'http://10.214.52.137:8000'
 weibo_app_key = u'3482624382'
 weibo_app_secret = u'af44e0e7c3a7a55760d437cea207dd22'
 callback_url = site_url + u'/weibo_callback'

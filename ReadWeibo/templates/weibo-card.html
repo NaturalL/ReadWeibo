@@ -1,10 +1,16 @@
 <ul class="gNow" id="{{weibo.w_id}}">
     <li>
         <div class="btn-group" data-toggle="buttons-radio">
-            <button class="btn {% if weibo.real_category == 0%}active{% endif %}" >未分类</button>
-          <button id="{{weibo.w_id}}-1" class="btn category {% if weibo.real_category == 1 %}active{% endif %}" >状态更新</button>
-          <button id="{{weibo.w_id}}-2" class="btn category {% if weibo.real_category == 2 %}active{% endif %}">新闻</button>
-          <button id="{{weibo.w_id}}-3" class="btn category {% if weibo.real_category == 3 %}active{% endif %}">主题微博</button>
+          <button id="no-category" class="btn {% if weibo.real_category == 0%}active{% endif %}" >未分类</button>
+          <button id="{{weibo.w_id}}-2" class="btn category {% if weibo.real_category == 2 %}active{% endif %}" title="数据挖掘，自然语言处理等话题的微博">机器学习</button>
+          <button id="{{weibo.w_id}}-3" class="btn category {% if weibo.real_category == 3 %}active{% endif %}" title="IT技术讨论分享的微博">IT技术</button>
+          <button id="{{weibo.w_id}}-4" class="btn category {% if weibo.real_category == 4 %}active{% endif %}" title="IT相关新闻，消息，评论的微博">IT新闻</button>
+          <br />
+          <button id="{{weibo.w_id}}-5" class="btn category {% if weibo.real_category == 5 %}active{% endif %}" title="社会国际新闻，消息，评论的微博">社会，国际新闻</button>
+          <button id="{{weibo.w_id}}-6" class="btn category {% if weibo.real_category == 6 %}active{% endif %}" title="美剧，电影，电视剧相关的微博">美剧电影</button>
+          <button id="{{weibo.w_id}}-7" class="btn category {% if weibo.real_category == 7 %}active{% endif %}" title="人生感悟，名人名言等净化心灵的微博">心灵鸡汤</button>
+          <button id="{{weibo.w_id}}-8" class="btn category {% if weibo.real_category == 8 %}active{% endif %}" title="有意思的微博">搞笑段子</button>
+          <button id="{{weibo.w_id}}-1" class="btn category {% if weibo.real_category == 1 %}active{% endif %}" title="其他的微博">其他</button>
         </div>
         <div class="card">
             <p class="card-title">@{{weibo.owner.w_name}}</p>
@@ -20,6 +26,7 @@
             {% if weibo.retweeted_status.bmiddle_pic %}
             <img src="{{weibo.retweeted_status.bmiddle_pic}}" class="full" />
             {% endif %}
+            <p>{{ weibo.created_at}}</p>
         </div>
         
     </li>
